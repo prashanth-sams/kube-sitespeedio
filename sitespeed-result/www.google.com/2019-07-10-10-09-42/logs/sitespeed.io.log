@@ -1,0 +1,21 @@
+[2019-07-10 10:09:42] INFO: [sitespeedio] Versions OS: linux 4.15.0 nodejs: v10.13.0 sitespeed.io: 9.5.0 browsertime: 5.4.1 coach: 3.6.0
+[2019-07-10 10:09:43] INFO: [browsertime] Running tests using Chrome - 1 iteration(s)
+[2019-07-10 10:09:45] INFO: [browsertime.command.measure] Testing url https://www.google.com iteration 1
+[2019-07-10 10:10:05] INFO: [browsertime] https://www.google.com 20 requests, 400.48 kb, backEndTime: 353ms, firstPaint: 538ms, firstVisualChange: 567ms, DOMContentLoaded: 697ms, Load: 1.26s, speedIndex: 670, visualComplete85: 667ms, lastVisualChange: 6.20s, rumSpeedIndex: 549
+[2019-07-10 10:10:05] ERROR: [sitespeedio.plugin.budget] Failing budget timings.LastVisualChange for https://www.google.com with value 6200 max limit 1200
+[2019-07-10 10:10:05] ERROR: [sitespeedio.plugin.budget] Failing budget timings.VisualReadiness for https://www.google.com with value 5633 max limit 200
+[2019-07-10 10:10:05] ERROR: [sitespeedio.plugin.budget] Failing budget score.accessibility for https://www.google.com with value 66 min limit 100
+[2019-07-10 10:10:05] ERROR: [sitespeedio.plugin.budget] Failing budget score.bestpractice for https://www.google.com with value 64 min limit 100
+[2019-07-10 10:10:05] ERROR: [sitespeedio.plugin.budget] Failing budget score.privacy for https://www.google.com with value 77 min limit 100
+[2019-07-10 10:10:05] ERROR: [sitespeedio.plugin.budget] Failing budget score.performance for https://www.google.com with value 82 min limit 100
+[2019-07-10 10:10:05] ERROR: [sitespeedio.plugin.budget] Failing budget requests.html for https://www.google.com with value 8 max limit 1
+[2019-07-10 10:10:05] ERROR: [sitespeedio.plugin.budget] Failing budget requests.javascript for https://www.google.com with value 4 max limit 0
+[2019-07-10 10:10:05] ERROR: [sitespeedio.plugin.budget] Failing budget requests.font for https://www.google.com with value 1 max limit 0
+[2019-07-10 10:10:05] ERROR: [sitespeedio.plugin.budget] Failing budget transferSize.total for https://www.google.com with value 410091 max limit 400000
+[2019-07-10 10:10:05] ERROR: [sitespeedio.plugin.budget] Failing budget transferSize.html for https://www.google.com with value 64882 max limit 20000
+[2019-07-10 10:10:05] ERROR: [sitespeedio.plugin.budget] Failing budget transferSize.javascript for https://www.google.com with value 275970 max limit 0
+[2019-07-10 10:10:05] ERROR: [sitespeedio.plugin.budget] Failing budget transferSize.font for https://www.google.com with value 48002 max limit 0
+[2019-07-10 10:10:05] ERROR: [sitespeedio.plugin.budget] Failing budget thirdParty.transferSize for https://www.google.com with value 107270 max limit 0
+[2019-07-10 10:10:05] ERROR: [sitespeedio.plugin.budget] Failing budget thirdParty.requests for https://www.google.com with value 5 max limit 0
+[2019-07-10 10:10:05] INFO: [sitespeedio.plugin.budget] Budget: 10 working and 15 failing tests
+[2019-07-10 10:10:07] INFO: [sitespeedio.plugin.html] HTML stored in /sitespeed.io/sitespeed-result/www.google.com/2019-07-10-10-09-42

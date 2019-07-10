@@ -1,0 +1,184 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: grafana
+  labels:
+    run: grafana
+spec:
+  ports:
+  - name: grafana
+    protocol: TCP
+    port: 3000
+    targetPort: 3000
+  selector:
+    run: grafana
+  type: NodePort
+  externalTrafficPolicy: Cluster
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: graphite
+  labels:
+    run: graphite
+spec:
+  ports:
+  - name: graphite-1
+    protocol: TCP
+    port: 8080
+    targetPort: 80
+  - name: graphite-2
+    protocol: TCP
+    port: 2003
+    targetPort: 2003
+  selector:
+    run: graphite
+  type: NodePort
+  externalTrafficPolicy: Cluster
+
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: sitespeed-io
+  labels:
+    run: sitespeed-io
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: sitespeed-io
+  template:
+    metadata:
+      labels:
+        run: sitespeed-io
+    spec:
+      containers:
+      - name: sitespeed-io
+        image: sitespeedio/sitespeed.io
+        securityContext:
+          privileged: true
+        restartPolicy: Always
+        command: [ "/bin/bash", "-ce", "tail -f /dev/null" ]
+        volumeMounts:
+          - mountPath: /sitespeed.io
+            name: sitespeed-volume
+      volumes: 
+        - name: sitespeed-volume
+          hostPath:
+            path: '/Users/prashanth/Documents/kube-sitespeed/'
+        - name: dshm
+          emptyDir:
+            medium: 'Memory'
+            sizeLimit: '1024Mi'
+
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: grafana
+  labels:
+    run: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: grafana
+  template:
+    metadata:
+      labels:
+        run: grafana
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana:6.2.0
+        restartPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          value: hdeAga76VG6ga7plZ1
+        - name: GF_SECURITY_ADMIN_USER
+          value: 'sitespeedio'
+        - name: GF_AUTH_ANONYMOUS_ENABLED
+          value: 'true'
+        - name: GF_USERS_ALLOW_SIGN_UP
+          value: 'false'
+        - name: GF_USERS_ALLOW_ORG_CREATE
+          value: 'false'
+        volumeMounts:
+          - mountPath: /var/lib/grafana
+            name: grafana-volume
+      volumes:
+        - name: grafana-volume
+          hostPath:
+            path: grafana
+
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: graphite
+  labels:
+    run: graphite
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: graphite
+  template:
+    metadata:
+      labels:
+        run: graphite
+    spec:
+      containers:
+      - name: graphite
+        image: sitespeedio/graphite:1.1.5-3
+        restartPolicy: Always
+        ports:
+        - name: graphite-1
+          containerPort: 8080
+          hostPort: 80
+        - name: graphite-2
+          containerPort: 2003
+          hostPort: 2003
+        env:
+        - name: GF_PASSWORD
+          value: hdeAga76VG6ga7plZ1
+        - name: GF_USER
+          value: 'sitespeedio'
+        volumeMounts:
+          - mountPath: /opt/graphite/storage/whisper
+            name: whisper-volume
+      volumes:
+        - name: whisper-volume
+          hostPath:
+            path: whisper
+
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: grafana-setup
+  labels:
+    run: grafana-setup
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: grafana-setup
+  template:
+    metadata:
+      labels:
+        run: grafana-setup
+    spec:
+      containers:
+      - name: grafana-setup
+        image: sitespeedio/grafana-bootstrap:9.0.1
+        env:
+        - name: GF_PASSWORD
+          value: hdeAga76VG6ga7plZ1
+        - name: GF_USER
+          value: 'sitespeedio'

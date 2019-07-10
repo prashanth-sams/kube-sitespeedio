@@ -1,0 +1,20 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: graphite
+  labels:
+    run: graphite
+spec:
+  ports:
+  - name: graphite-1
+    protocol: TCP
+    port: 8080
+    targetPort: 80
+  - name: graphite-2
+    protocol: TCP
+    port: 2003
+    targetPort: 2003
+  selector:
+    run: graphite
+  type: NodePort
+  externalTrafficPolicy: Cluster

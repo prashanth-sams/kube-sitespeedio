@@ -1,0 +1,40 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: graphite
+  labels:
+    run: graphite
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: graphite
+  template:
+    metadata:
+      labels:
+        run: graphite
+    spec:
+      containers:
+      - name: graphite
+        image: sitespeedio/graphite:1.1.5-3
+        ports:
+        - name: graphite-1
+          containerPort: 8080
+          hostPort: 80
+        - name: graphite-2
+          containerPort: 2003
+          hostPort: 2003
+        resources: {}
+        env:
+        - name: GF_PASSWORD
+          value: hdeAga76VG6ga7plZ1
+        - name: GF_USER
+          value: 'sitespeedio'
+        volumeMounts:
+          - mountPath: /opt/graphite/storage/whisper
+            name: whisper-volume
+      restartPolicy: Always
+      volumes:
+        - name: whisper-volume
+          hostPath:
+            path: whisper

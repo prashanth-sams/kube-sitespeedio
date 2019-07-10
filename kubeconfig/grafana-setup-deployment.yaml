@@ -1,0 +1,25 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: grafana-setup
+  labels:
+    run: grafana-setup
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: grafana-setup
+  template:
+    metadata:
+      labels:
+        run: grafana-setup
+    spec:
+      containers:
+      - name: grafana-setup
+        image: sitespeedio/grafana-bootstrap:9.0.1
+        env:
+        - name: GF_PASSWORD
+          value: hdeAga76VG6ga7plZ1
+        - name: GF_USER
+          value: 'sitespeedio'
+        resources: {}

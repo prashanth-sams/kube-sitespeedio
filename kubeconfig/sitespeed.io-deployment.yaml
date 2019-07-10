@@ -1,0 +1,35 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: sitespeed-io
+  labels:
+    run: sitespeed-io
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: sitespeed-io
+  template:
+    metadata:
+      labels:
+        run: sitespeed-io
+    spec:
+      containers:
+      - name: sitespeed-io
+        image: sitespeedio/sitespeed.io
+        securityContext:
+          privileged: true
+        command: [ "/bin/bash", "-ce", "tail -f /dev/null" ]
+        volumeMounts:
+          - mountPath: /sitespeed.io
+            name: sitespeed-volume
+        resources: {}
+      restartPolicy: Always
+      volumes: 
+        - name: sitespeed-volume
+          hostPath:
+            path: '/Users/prashanth/Documents/kube-sitespeed/'
+        - name: dshm
+          emptyDir:
+            medium: 'Memory'
+            sizeLimit: '1024Mi'
