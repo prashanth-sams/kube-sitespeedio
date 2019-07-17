@@ -22,14 +22,10 @@ spec:
         command: [ "/bin/bash", "-ce", "tail -f /dev/null" ]
         volumeMounts:
           - mountPath: /sitespeed.io
-            name: sitespeed-volume
+            name: sitespeed-volume-claim
         resources: {}
       restartPolicy: Always
-      volumes: 
-        - name: sitespeed-volume
-          hostPath:
-            path: '/tmp/'
-        - name: dshm
-          emptyDir:
-            medium: 'Memory'
-            sizeLimit: '1024Mi'
+      volumes:
+      - name: sitespeed-volume-claim
+        persistentVolumeClaim:
+          claimName: sitespeed-volume-claim

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sitespeed-test-data
+spec:
+  containers:
+  - name: sitespeed-test-data
+    image: prashanthsams/sitespeed_test_data:latest
+    resources: {}
+    command: [ "/bin/bash", "-ce", "tail -f /dev/null" ]

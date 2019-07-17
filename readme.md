@@ -8,7 +8,19 @@
 kubectl create -f kubeconfig/ --namespace=sitespeed-io
 ```
 
-### **sitespeedio runner**
+### **Data manipulation**
+
+Clone data and copy it inside your sitespeed container
+
+```
+sitespeed_pod=$(kubectl get pods -n sitespeed-io | grep sitespeed-io | awk '{print $1}')
+
+kubectl cp ~/<path> sitespeed-io/$sitespeed_pod:/sitespeed.io
+
+kubectl exec -it --namespace=sitespeed-io $sitespeed_pod -- bash -c "/start.sh urls.txt --budget.configPath budget.json --graphite.host=graphite --browsertime.iterations 1 --browsertime.browser chrome"
+```
+
+### **SitespeedIO runner #generic**
 ```
 kubectl exec -it --namespace=<custom-namespace> <custom_pod_name> -- bash -c "/start.sh urls.txt --budget.configPath budget.json --graphite.host=graphite --browsertime.iterations 1 --browsertime.browser chrome"
 ```
