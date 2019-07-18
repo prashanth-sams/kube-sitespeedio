@@ -15,7 +15,7 @@ Clone data and copy it inside your sitespeed container
 ```
 sitespeed_pod=$(kubectl get pods -n sitespeed-io | grep sitespeed-io | awk '{print $1}')
 
-kubectl cp ~/<path> sitespeed-io/$sitespeed_pod:/sitespeed.io
+kubectl cp ~/<path>/. sitespeed-io/$sitespeed_pod:.
 
 kubectl exec -it --namespace=sitespeed-io $sitespeed_pod -- bash -c "/start.sh urls.txt --budget.configPath budget.json --graphite.host=graphite --browsertime.iterations 1 --browsertime.browser chrome"
 ```
