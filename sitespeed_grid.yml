@@ -68,7 +68,7 @@ spec:
       volumes: 
         - name: sitespeed-volume
           hostPath:
-            path: '/Users/prashanth/Documents/kube-sitespeed/'
+            path: '/tmp/'
         - name: dshm
           emptyDir:
             medium: 'Memory'
