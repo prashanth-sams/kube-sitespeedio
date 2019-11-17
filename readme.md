@@ -5,6 +5,7 @@
 
 `Services`, `Deployments`, and `Pods`; and eventually `volumes`
 ```
+kubectl create namespace sitespeed-io
 kubectl create -f kubeconfig/ --namespace=sitespeed-io
 ```
 
